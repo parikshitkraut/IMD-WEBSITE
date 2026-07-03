@@ -1,0 +1,13 @@
+{
+  "name": "weatherdesk-rmc-nagpur",
+  "version": "1.0.0",
+  "description": "WeatherDesk - RMC Nagpur Internship Project MVP",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm run build"
+  },
+  "author": "",
+  "license": "ISC"
+}
