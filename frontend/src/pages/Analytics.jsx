@@ -426,7 +426,7 @@ export default function Analytics() {
               </tr>
             </thead>
             <tbody>
-              stats ? [
+              {stats ? [
                 {
                   param: 'Maximum Temperature (°C)',
                   max: stats.maxTemp.max,
@@ -475,7 +475,7 @@ export default function Analytics() {
                   <td className="px-3 py-2.5 text-center text-white">{row.avg}</td>
                   <td className="px-3 py-2.5 text-center font-bold" style={{ color: row.depColor }}>{row.dep}</td>
                 </tr>
-              )) : null
+              )) : null}
             </tbody>
           </table>
         </div>
