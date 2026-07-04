@@ -478,9 +478,17 @@ body {
   background-color: #003366 !important; /* Keep official dark blue */
 }
 
-/* Alert ticker — keep its dark background for contrast */
+/* Alert ticker — premium soft light alert background */
 .light-mode .alert-ticker {
-  background: linear-gradient(to right, rgba(127, 29, 29, 0.8), rgba(124, 45, 18, 0.6), rgba(127, 29, 29, 0.8)) !important;
+  background: #fef3c7 !important; /* Soft warm yellow */
+  border-bottom: 1px solid #fde68a !important;
+}
+.light-mode .alert-ticker span,
+.light-mode .alert-ticker p {
+  color: #92400e !important; /* Dark amber text */
+}
+.light-mode .alert-ticker svg {
+  color: #b45309 !important;
 }
 
 /* ═══════════════════════════════════════════
@@ -645,15 +653,15 @@ body {
 
 .light-mode .old-theme-header,
 .light-mode .old-theme-accordion-header {
-  background-color: #cddcae !important;
-  border: 1px solid #bccb9c !important;
-  border-radius: 4px !important;
+  background-color: #f1f5f9 !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 6px !important;
 }
 
 .light-mode .old-theme-header span,
 .light-mode .old-theme-accordion-header span,
 .light-mode .old-theme-accordion-header svg {
-  color: #1e3a8a !important;
+  color: #334155 !important;
   font-weight: 700 !important;
 }
 
@@ -663,24 +671,36 @@ body {
 }
 
 .light-mode .old-theme-link {
-  background-color: #bdf2f2 !important;
-  color: #0f172a !important;
-  border-left: 4px solid #99d6d6 !important;
-  border-bottom: 1px solid rgba(0,0,0,0.05) !important;
+  background-color: transparent !important;
+  color: #475569 !important;
+  border-left: 3px solid transparent !important;
+  border-bottom: none !important;
+  transition: all 0.2s ease !important;
 }
 
 .light-mode .old-theme-link span,
 .light-mode .old-theme-link a {
-  color: #0f172a !important;
+  color: #475569 !important;
 }
 
 .light-mode .old-theme-link:hover {
-  background-color: #a0e8e8 !important;
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+.light-mode .old-theme-link:hover span {
+  color: #0f172a !important;
 }
 
 .light-mode .old-theme-link.nav-active {
-  background-color: #8ce1e1 !important;
-  border-left: 4px solid #22c55e !important;
+  background-color: #e0f2fe !important;
+  border-left: 3px solid #0284c7 !important;
+  font-weight: 700 !important;
+}
+
+.light-mode .old-theme-link.nav-active span,
+.light-mode .old-theme-link.nav-active a {
+  color: #0369a1 !important;
   font-weight: 700 !important;
 }
 

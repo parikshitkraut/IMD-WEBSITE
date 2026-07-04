@@ -279,7 +279,7 @@ export default function Dashboard() {
               <div key={i} className={`flex gap-3 p-3 rounded-xl border ${
                 alert.analysis.alertLevel === 'RED' ? alertColors.danger :
                 alert.analysis.alertLevel === 'ORANGE' ? alertColors.warning : alertColors.watch
-              }`} style={{ background: 'rgba(0,0,0,0.2)' }}>
+              }`} style={{ background: isDarkMode ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.7)' }}>
                 <span className="text-base flex-shrink-0">
                   {alert.analysis.alertLevel === 'RED' ? '🔴' : alert.analysis.alertLevel === 'ORANGE' ? '🟠' : '🟡'}
                 </span>
