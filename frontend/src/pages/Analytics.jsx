@@ -179,6 +179,53 @@ export default function Analytics() {
       }
     };
   }, [liveData]);
+
+  const tableRows = useMemo(() => {
+    if (!stats) return [];
+    return [
+      {
+        param: 'Maximum Temperature (°C)',
+        max: stats.maxTemp.max,
+        min: stats.maxTemp.min,
+        avg: stats.maxTemp.avg,
+        dep: stats.maxTemp.dep,
+        depColor: parseFloat(stats.maxTemp.dep) >= 0 ? '#ef4444' : '#3b82f6',
+      },
+      {
+        param: 'Minimum Temperature (°C)',
+        max: stats.minTemp.max,
+        min: stats.minTemp.min,
+        avg: stats.minTemp.avg,
+        dep: stats.minTemp.dep,
+        depColor: parseFloat(stats.minTemp.dep) >= 0 ? '#ef4444' : '#3b82f6',
+      },
+      {
+        param: 'Morning RH (%)',
+        max: stats.morningRh.max,
+        min: stats.morningRh.min,
+        avg: stats.morningRh.avg,
+        dep: stats.morningRh.dep,
+        depColor: '#3b82f6',
+      },
+      {
+        param: 'Evening RH (%)',
+        max: stats.eveningRh.max,
+        min: stats.eveningRh.min,
+        avg: stats.eveningRh.avg,
+        dep: stats.eveningRh.dep,
+        depColor: '#3b82f6',
+      },
+      {
+        param: 'Rainfall 24h (mm)',
+        max: stats.rainfall.max,
+        min: stats.rainfall.min,
+        avg: stats.rainfall.avg,
+        dep: stats.rainfall.dep,
+        depColor: '#60a5e0',
+      },
+    ];
+  }, [stats]);
+
   if (loading) {
     return (
       <div className="h-full w-full flex items-center justify-center p-20">
@@ -426,48 +473,7 @@ export default function Analytics() {
               </tr>
             </thead>
             <tbody>
-              {stats ? [
-                {
-                  param: 'Maximum Temperature (°C)',
-                  max: stats.maxTemp.max,
-                  min: stats.maxTemp.min,
-                  avg: stats.maxTemp.avg,
-                  dep: stats.maxTemp.dep,
-                  depColor: parseFloat(stats.maxTemp.dep) >= 0 ? '#ef4444' : '#3b82f6',
-                },
-                {
-                  param: 'Minimum Temperature (°C)',
-                  max: stats.minTemp.max,
-                  min: stats.minTemp.min,
-                  avg: stats.minTemp.avg,
-                  dep: stats.minTemp.dep,
-                  depColor: parseFloat(stats.minTemp.dep) >= 0 ? '#ef4444' : '#3b82f6',
-                },
-                {
-                  param: 'Morning RH (%)',
-                  max: stats.morningRh.max,
-                  min: stats.morningRh.min,
-                  avg: stats.morningRh.avg,
-                  dep: stats.morningRh.dep,
-                  depColor: '#3b82f6',
-                },
-                {
-                  param: 'Evening RH (%)',
-                  max: stats.eveningRh.max,
-                  min: stats.eveningRh.min,
-                  avg: stats.eveningRh.avg,
-                  dep: stats.eveningRh.dep,
-                  depColor: '#3b82f6',
-                },
-                {
-                  param: 'Rainfall 24h (mm)',
-                  max: stats.rainfall.max,
-                  min: stats.rainfall.min,
-                  avg: stats.rainfall.avg,
-                  dep: stats.rainfall.dep,
-                  depColor: '#60a5e0',
-                },
-              ].map((row, i) => (
+              {tableRows.map((row, i) => (
                 <tr key={i} className="border-b border-blue-900/20 hover:bg-blue-900/10">
                   <td className="px-3 py-2.5 text-white font-medium">{row.param}</td>
                   <td className="px-3 py-2.5 text-center text-orange-300">{row.max}</td>
@@ -475,7 +481,7 @@ export default function Analytics() {
                   <td className="px-3 py-2.5 text-center text-white">{row.avg}</td>
                   <td className="px-3 py-2.5 text-center font-bold" style={{ color: row.depColor }}>{row.dep}</td>
                 </tr>
-              )) : null}
+              ))}
             </tbody>
           </table>
         </div>
