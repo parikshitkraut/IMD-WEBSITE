@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTheme } from '../context/ThemeContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FileText, Download, Printer, CheckCircle, Loader2, Share2, Hash, Users, MessageCircle, Send } from 'lucide-react';
 import { toast } from 'react-hot-toast';
@@ -142,6 +143,7 @@ Source: RMC Nagpur | www.imdnagpur.gov.in
 }
 
 export default function Reports() {
+  const { isDarkMode } = useTheme();
   const [selectedType, setSelectedType] = useState('daily');
   const [liveData, setLiveData] = useState([]);
   const [reportContent, setReportContent] = useState('Loading data...');
