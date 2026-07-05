@@ -311,6 +311,22 @@ body {
 
 /* --- White / near-white text → readable dark --- */
 .light-mode .text-white { color: #1e293b !important; }
+
+/* Prevent white text from hiding on dark buttons, badges, and user bubbles in Light Mode */
+.light-mode button.text-white,
+.light-mode a.text-white,
+.light-mode .bg-blue-600.text-white,
+.light-mode .bg-blue-700.text-white,
+.light-mode .bg-red-600.text-white,
+.light-mode .bg-green-600.text-white,
+.light-mode .bg-purple-600.text-white,
+.light-mode .bg-cyan-600.text-white,
+.light-mode .chat-bubble-user .text-white,
+.light-mode .chat-bubble-user strong,
+.light-mode .chat-bubble-user span,
+.light-mode .chat-bubble-user div {
+  color: #ffffff !important;
+}
 .light-mode .text-gray-300 { color: #475569 !important; }
 .light-mode .text-gray-400 { color: #64748b !important; }
 .light-mode .text-gray-500 { color: #6b7280 !important; }
