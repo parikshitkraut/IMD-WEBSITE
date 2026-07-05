@@ -32,6 +32,11 @@ const cities = [
   'Wardha', 'Washim', 'Yavatmal'
 ];
 
+// Global in-memory cache for scraped observations
+let cachedWeatherData = null;
+let lastScrapeTime = null;
+
+
 // Helper to generate a random number between min and max (inclusive)
 const random = (min, max, decimals = 1) => {
   const num = Math.random() * (max - min) + min;
@@ -122,8 +127,9 @@ const generateWeatherData = () => {
   });
 };
 
-app.get('/api/weather', async (req, res) => {
+async function updateWeatherCache() {
   try {
+    console.log('[WeatherCache] Performing background scrape of IMD Nagpur observations...');
     const scrapeResult = await scrapeObservations();
     if (scrapeResult && scrapeResult.success && scrapeResult.records.length > 0) {
       const mappedData = cities.map(city => {
@@ -186,20 +192,44 @@ app.get('/api/weather', async (req, res) => {
         }
       });
       
-      return res.json({
-        success: true,
-        data: mappedData,
-        source: 'Live Scraping (RMC Nagpur Official)'
-      });
+      cachedWeatherData = mappedData;
+      lastScrapeTime = new Date().toISOString();
+      console.log('[WeatherCache] Background scrape successful. Cache updated at', lastScrapeTime);
+      return true;
     }
   } catch (err) {
-    console.error('Error fetching live weather from IMD:', err);
+    console.error('[WeatherCache] Background scrape failed:', err.message);
+  }
+  return false;
+}
+
+// Initial background scrape on startup
+updateWeatherCache();
+
+// Update weather cache in background every 15 minutes (900,000 ms)
+setInterval(updateWeatherCache, 15 * 60 * 1000);
+
+app.get('/api/weather', async (req, res) => {
+  // If cache is empty (e.g. startup failed or pending), try to scrape synchronously once
+  if (!cachedWeatherData) {
+    console.log('[WeatherAPI] Cache empty. Performing initial synchronous scrape...');
+    await updateWeatherCache();
   }
   
+  if (cachedWeatherData) {
+    return res.json({
+      success: true,
+      data: cachedWeatherData,
+      source: 'Background Scraped Cache (RMC Nagpur Official)',
+      lastUpdated: lastScrapeTime
+    });
+  }
+  
+  // Last resort fallback
   res.json({
     success: true,
     data: generateWeatherData(),
-    source: 'Mock data (Scraping failed)'
+    source: 'Mock data (Scraping cache empty)'
   });
 });
 
