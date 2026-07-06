@@ -265,13 +265,13 @@ function getPreviousRainfall(cityName, days = 10) {
     // Determine condition based on actual rainfall (IMD official criteria)
     let condition, icon;
     if (rainfall === 0 || rainfall == null) { condition = 'No Rain'; icon = '☀️'; }
-    else if (rainfall >= 0.1 && rainfall <= 2.4) { condition = 'Very Light Rain'; icon = '🌦️'; }
-    else if (rainfall >= 2.5 && rainfall <= 15.5) { condition = 'Light Rain'; icon = '🌧️'; }
-    else if (rainfall >= 15.6 && rainfall <= 64.4) { condition = 'Moderate Rain'; icon = '🌧️'; }
-    else if (rainfall >= 64.5 && rainfall <= 115.5) { condition = 'Heavy Rain'; icon = '⛈️'; }
-    else if (rainfall >= 115.6 && rainfall <= 204.4) { condition = 'Very Heavy Rain'; icon = '⛈️'; }
-    else if (rainfall >= 204.5) { condition = 'Extremely Heavy Rain'; icon = '🌊'; }
-    else { condition = 'Light Rain'; icon = '🌧️'; }
+    else if (rainfall >= 0.1 && rainfall <= 2.4) { condition = 'Very Light'; icon = '🌦️'; }
+    else if (rainfall >= 2.5 && rainfall <= 15.5) { condition = 'Light'; icon = '🌧️'; }
+    else if (rainfall >= 15.6 && rainfall <= 64.4) { condition = 'Moderate'; icon = '🌧️'; }
+    else if (rainfall >= 64.5 && rainfall <= 115.5) { condition = 'Heavy'; icon = '⛈️'; }
+    else if (rainfall >= 115.6 && rainfall <= 204.4) { condition = 'Very Heavy'; icon = '⛈️'; }
+    else if (rainfall >= 204.5) { condition = 'Extremely Heavy'; icon = '🌊'; }
+    else { condition = 'Light'; icon = '🌧️'; }
 
     return {
       date: date.toISOString().split('T')[0],

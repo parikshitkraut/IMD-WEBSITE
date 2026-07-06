@@ -8,7 +8,7 @@ import {
 import {
   Thermometer, Droplets, Wind, Eye, TrendingUp, TrendingDown,
   Minus, AlertTriangle, Cloud, CloudRain, Sun, Zap, MapPin,
-  FileText, BarChart3, X, Download
+  FileText, BarChart3, X, Download, ChevronDown
 } from 'lucide-react';
 import { weatherData, regions } from '../data/weatherData';
 import { fetchForecast10 } from '../services/api';
@@ -66,6 +66,7 @@ function CitySidePanel({ city, regionStats, onOpenRainfallModal, onClose }) {
   const { isDarkMode } = useTheme();
   const [loadingForecast, setLoadingForecast] = useState(false);
   const [prevCity, setPrevCity] = useState(null);
+  const [showLegend, setShowLegend] = useState(false);
 
   useEffect(() => {
     if (city?.city && city.city !== prevCity) {
@@ -90,15 +91,15 @@ function CitySidePanel({ city, regionStats, onOpenRainfallModal, onClose }) {
     const currentMax = parseFloat(city.maxTemp ?? city.temperature?.max ?? 30.0);
     const currentMin = parseFloat(city.minTemp ?? city.temperature?.min ?? 23.0);
     
-    // Aligned condition term and icon based on official IMD criteria
+    // Aligned condition term and icon based on official IMD criteria (exact table words)
     let condition = 'No Rain';
     let icon = '☀️';
-    if (currentRain >= 0.1 && currentRain <= 2.4) { condition = 'Very Light Rain'; icon = '🌦️'; }
-    else if (currentRain >= 2.5 && currentRain <= 15.5) { condition = 'Light Rain'; icon = '🌧️'; }
-    else if (currentRain >= 15.6 && currentRain <= 64.4) { condition = 'Moderate Rain'; icon = '🌧️'; }
-    else if (currentRain >= 64.5 && currentRain <= 115.5) { condition = 'Heavy Rain'; icon = '⛈️'; }
-    else if (currentRain >= 115.6 && currentRain <= 204.4) { condition = 'Very Heavy Rain'; icon = '⛈️'; }
-    else if (currentRain >= 204.5) { condition = 'Extremely Heavy Rain'; icon = '🌊'; }
+    if (currentRain >= 0.1 && currentRain <= 2.4) { condition = 'Very Light'; icon = '🌦️'; }
+    else if (currentRain >= 2.5 && currentRain <= 15.5) { condition = 'Light'; icon = '🌧️'; }
+    else if (currentRain >= 15.6 && currentRain <= 64.4) { condition = 'Moderate'; icon = '🌧️'; }
+    else if (currentRain >= 64.5 && currentRain <= 115.5) { condition = 'Heavy'; icon = '⛈️'; }
+    else if (currentRain >= 115.6 && currentRain <= 204.4) { condition = 'Very Heavy'; icon = '⛈️'; }
+    else if (currentRain >= 204.5) { condition = 'Extremely Heavy'; icon = '🌊'; }
     
     list[lastIdx] = {
       ...list[lastIdx],
@@ -478,6 +479,59 @@ function CitySidePanel({ city, regionStats, onOpenRainfallModal, onClose }) {
               {processedForecast10.length > 0 && processedForecast10[0].isActualData && (
                 <div className="mt-1.5 px-1.5 py-1 rounded-md bg-green-900/20 border border-green-800/30">
                   <span className="text-[8px] text-green-400 font-semibold">✓ Real IMD readings from Excel data</span>
+                </div>
+              )}
+            </div>
+            
+            {/* IMD Intensity Legend */}
+            <div className="mt-3 border border-blue-900/30 rounded-lg p-2 bg-blue-950/20 text-[9px]">
+              <button 
+                onClick={() => setShowLegend(!showLegend)} 
+                className="w-full flex items-center justify-between text-cyan-400 font-semibold uppercase tracking-wider"
+              >
+                <span>ℹ️ IMD Rainfall Intensity Criteria</span>
+                <ChevronDown size={11} className={`transform transition-transform ${showLegend ? 'rotate-180' : ''}`} />
+              </button>
+              {showLegend && (
+                <div className="mt-2 space-y-1.5 border-t border-blue-900/20 pt-2 text-gray-300">
+                  <div className="grid grid-cols-3 font-bold text-blue-400 border-b border-blue-900/10 pb-1 uppercase tracking-wider text-[7.5px]">
+                    <span>Term / Range</span>
+                    <span>Hindi</span>
+                    <span>Marathi</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-1 py-0.5 border-b border-blue-900/5">
+                    <span className="font-semibold text-white">Very Light (0.1-2.4 mm)</span>
+                    <span className="text-gray-300 font-semibold">बहुत हल्की वर्षा</span>
+                    <span className="text-gray-300 font-semibold">खूप हलका पाऊस</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-1 py-0.5 border-b border-blue-900/5">
+                    <span className="font-semibold text-white">Light (2.5-15.5 mm)</span>
+                    <span className="text-gray-300 font-semibold">हल्की वर्षा</span>
+                    <span className="text-gray-300 font-semibold">हलका पाऊस</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-1 py-0.5 border-b border-blue-900/5">
+                    <span className="font-semibold text-white">Moderate (15.6-64.4 mm)</span>
+                    <span className="text-gray-300 font-semibold">मध्यम वर्षा</span>
+                    <span className="text-gray-300 font-semibold">मध्यम पाऊस</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-1 py-0.5 border-b border-blue-900/5">
+                    <span className="font-semibold text-white">Heavy (64.5-115.5 mm)</span>
+                    <span className="text-gray-300 font-semibold">भारी वर्षा</span>
+                    <span className="text-gray-300 font-semibold">जोरदार पाऊस</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-1 py-0.5 border-b border-blue-900/5">
+                    <span className="font-semibold text-white">Very Heavy (115.6-204.4 mm)</span>
+                    <span className="text-gray-300 font-semibold">बहुत भारी वर्षा</span>
+                    <span className="text-gray-300 font-semibold">खूप जोरदार पाऊस</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-1 py-0.5 border-b border-blue-900/5">
+                    <span className="font-semibold text-white">Extremely Heavy (≥ 204.5 mm)</span>
+                    <span className="text-gray-300 font-semibold">अत्यधिक भारी वर्षा</span>
+                    <span className="text-gray-300 font-semibold">अत्यंत जोरदार पाऊस</span>
+                  </div>
+                  <div className="text-[7.5px] text-gray-400 leading-tight pt-1">
+                    * Exceptionally Heavy Rain: used when actual rainfall exceeds 12 cm (120 mm) and is near highest recorded rainfall.
+                  </div>
                 </div>
               )}
             </div>

@@ -312,13 +312,13 @@ app.get('/api/forecast10', (req, res) => {
       // Determine condition based on actual rainfall (IMD official criteria)
       let condition, icon;
       if (avgRainfall === 0 || avgRainfall == null) { condition = 'No Rain'; icon = '☀️'; }
-      else if (avgRainfall >= 0.1 && avgRainfall <= 2.4) { condition = 'Very Light Rain'; icon = '🌦️'; }
-      else if (avgRainfall >= 2.5 && avgRainfall <= 15.5) { condition = 'Light Rain'; icon = '🌧️'; }
-      else if (avgRainfall >= 15.6 && avgRainfall <= 64.4) { condition = 'Moderate Rain'; icon = '🌧️'; }
-      else if (avgRainfall >= 64.5 && avgRainfall <= 115.5) { condition = 'Heavy Rain'; icon = '⛈️'; }
-      else if (avgRainfall >= 115.6 && avgRainfall <= 204.4) { condition = 'Very Heavy Rain'; icon = '⛈️'; }
-      else if (avgRainfall >= 204.5) { condition = 'Extremely Heavy Rain'; icon = '🌊'; }
-      else { condition = 'Light Rain'; icon = '🌧️'; }
+      else if (avgRainfall >= 0.1 && avgRainfall <= 2.4) { condition = 'Very Light'; icon = '🌦️'; }
+      else if (avgRainfall >= 2.5 && avgRainfall <= 15.5) { condition = 'Light'; icon = '🌧️'; }
+      else if (avgRainfall >= 15.6 && avgRainfall <= 64.4) { condition = 'Moderate'; icon = '🌧️'; }
+      else if (avgRainfall >= 64.5 && avgRainfall <= 115.5) { condition = 'Heavy'; icon = '⛈️'; }
+      else if (avgRainfall >= 115.6 && avgRainfall <= 204.4) { condition = 'Very Heavy'; icon = '⛈️'; }
+      else if (avgRainfall >= 204.5) { condition = 'Extremely Heavy'; icon = '🌊'; }
+      else { condition = 'Light'; icon = '🌧️'; }
       
       return {
         date: dateStr,
